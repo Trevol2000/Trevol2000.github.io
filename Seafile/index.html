@@ -1,0 +1,287 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-52746336-1"
+                  id="Seafile"
+                  title=""
+                  environment="web"
+                  feedback-link="https://github.com/googlecodelabs/your-first-pwapp/issues">
+    
+      <google-codelab-step label="SEAFILE, INSTALACIÓN Y CONFIGURACIÓN" duration="0">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Paso 1: Instalaremos todos los requerimientos para instalar Seafile." duration="0">
+        <pre><code>apt-get install openjdk-8-jre poppler-utils libreoffice libreoffice-script-provider-python libpython2.7 python-pip mysql-server python-setuptools python-mysqldb python-memcache ttf-wqy-microhei ttf-wqy-zenhei xfonts-wqy python-pip apache2 -y</code></pre>
+<p>En realidad tan solo se necesitan: </p>
+<p>HTTP Server – Nginx or Apache</p>
+<p>Database Server – MySQL or MariaDB</p>
+<p>Python Tools</p>
+<p>Pero añadiremos más para evitar posibles errores.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Paso 2: Instalamos MariaDB Database Server." duration="0">
+        <ol type="1" start="1">
+<li>Instalas el software-properties-common;</li>
+</ol>
+<p>sudo apt-get install software-properties-common</p>
+<ol type="1" start="2">
+<li>Importa MariaDB gpg key:</li>
+</ol>
+<p>sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8</p>
+<ol type="1" start="3">
+<li>Añade el apt repositorio.</li>
+</ol>
+<p>sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8</p>
+<ol type="1" start="4">
+<li>Instalamos finalmente MariaDB.</li>
+</ol>
+<p>sudo apt update</p>
+<p>sudo apt -y install mariadb-server mariadb-client</p>
+<ol type="1" start="5">
+<li>Ahora crearemos una base de datos para cada uno de estos componentes del servidor.</li>
+</ol>
+<p>CREATE DATABASE seafile_server;</p>
+<p>CREATE DATABASE ccnet_server;</p>
+<p>CREATE DATABASE seahub_server;</p>
+<ol type="1" start="6">
+<li>Creamos los usuarios de la base de datos y otorgamos privilegios para las bases de datos creadas.</li>
+</ol>
+<p>CREATE USER &#39;seafile&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;StrongPassword&#39;;</p>
+<p>GRANT ALL ON seafile_server.* TO &#39;seafile&#39;@&#39;localhost&#39;;</p>
+<p>GRANT ALL ON ccnet_server.* TO &#39;seafile&#39;@&#39;localhost&#39;;</p>
+<p>GRANT ALL ON seahub_server.* TO &#39;seafile&#39;@&#39;localhost&#39;;</p>
+<ol type="1" start="7">
+<li>Confirmamos el acceso iniciando sesión en la base de datos como usuario del archivo.</li>
+</ol>
+<p>$ mysql -u seafile -p</p>
+<p>Y ponemos la contraseña que le pusimos antes.</p>
+<ol type="1" start="8">
+<li>Instalar las dependencias de Python.</li>
+</ol>
+<p>sudo apt -y install python python-pip python-pil python-ldap python-urllib3 libpython3.6 python-setuptools python-mysqldb python-memcache python-requests ffmpeg</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Paso 3: Descargamos e instalamos Seafile Server." duration="0">
+        <ol type="1" start="1">
+<li>Escribimos los siguiente, en mi caso usaré la versión 6.3.4.</li>
+</ol>
+<p>sudo apt -y install wget</p>
+<p>export VER=&#34;6.3.4&#34;</p>
+<p>wget https://download.seadrive.org/seafile-server_${VER}_x86-64.tar.gz</p>
+<ol type="1" start="2">
+<li>Una vez descargado el archivo, extraemos el archivo en el directorio /srv.</li>
+</ol>
+<p>sudo tar -xvf  seafile-server_${VER}_x86-64.tar.gz -C /srv</p>
+<p>sudo mv /srv/seafile-server-${VER} /srv/seafile</p>
+<ol type="1" start="3">
+<li>No hace falta instalar, tan solo ejecutaremos el script de la configuración.</li>
+</ol>
+<p>cd /srv/seafile/</p>
+<p>sudo ./setup-seafile-mysql.sh</p>
+<p>Paso 4: Guia de MSQL.</p>
+<ol type="1" start="1">
+<li>Ahora el script nos guiará para configurar el servidor Seafile usando MySQL.</li>
+</ol>
+<p>$ sudo ./setup-seafile-mysql.sh </p>
+<p>Debería salir que está comprobado python en esta máquina.</p>
+<ol type="1" start="2">
+<li>Una vez comprobado ya el script nos guiará.</li>
+</ol>
+<p>Presiona <code>ENTER</code> para continuar.</p>
+<ol type="1" start="3">
+<li>Elegimos el nombre de nuestro servidor.</li>
+</ol>
+<p><code>Seafile-Server</code></p>
+<ol type="1" start="4">
+<li>Elegimos el dominio o la IP de nuestro servidor.</li>
+</ol>
+<p>Ejemplo de IP, <code>192.168.10.215</code> o ejemplo de dominio, <code>fileserver.ejemplo.com</code></p>
+<ol type="1" start="5">
+<li>Elegimos donde poner nuestros datos de Seafile</li>
+</ol>
+<p>Importante que tenga espacio. Yo pondré la de por defecto <code>/srv/seafile-data</code></p>
+<ol type="1" start="6">
+<li>Elegimos el puerto que deseamos utilizar para el servidor de Seafile.</li>
+</ol>
+<p>Utilizaremos el puerto <code>8082</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Paso 4: Elegir la forma en cómo se iniciará la base de datos de Seafile." duration="0">
+        <ol type="1" start="1">
+<li>Tendremos dos opciones por elegir.</li>
+</ol>
+<p>[1] Saldrá crear nueva base de datos <code>ccnet/seafile/seahub databases </code></p>
+<p>[2] Utilizar la base de datos existente <code>ccnet/seafile/seahub databases</code></p>
+<p>Elegiremos el <code>2</code>.</p>
+<ol type="1" start="2">
+<li>Saldrá que cual es el host de mysql server.</li>
+</ol>
+<p><code>localhost</code></p>
+<ol type="1" start="3">
+<li>¿Qué puerto utilizará mysql server?</li>
+</ol>
+<p><code>3306</code></p>
+<ol type="1" start="4">
+<li>¿Que usuario de mysql usas para el Seafile?</li>
+</ol>
+<p><code>seafile</code></p>
+<ol type="1" start="5">
+<li>¿Cual es la contraseña para el usuario seafile de mysql?</li>
+</ol>
+<p>Escribimos la contraseña para seafile.</p>
+<ol type="1" start="6">
+<li>Ingresa el nombre de la base de datos existente para ccnet.</li>
+</ol>
+<p><code>ccnet_server</code></p>
+<ol type="1" start="7">
+<li>Ingresa el nombre de la base de datos existente para seafile.</li>
+</ol>
+<p><code>seafile_server</code></p>
+<ol type="1" start="8">
+<li>Ingresa el nombre de la base de datos existente para seahub:</li>
+</ol>
+<p><code>seahub_server</code></p>
+<p>Finalmente deberá salir tu configuración.</p>
+<p>Presiona <code>ENTER</code> para continuar o <code>Ctrl+C</code> para abortar.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Paso 5: Iniciar servicios Seafile." duration="0">
+        <ol type="1" start="1">
+<li>Inicia el daemon del servidor Seafile que maneja la carga, descarga y sincronización de archivos sin procesar con los siguientes comandos.</li>
+</ol>
+<p><code>cd /srv/seafile</code></p>
+<p><code>./seafile.sh start </code></p>
+<ol type="1" start="2">
+<li>Luego, iniciaremos el servicio de interfaz web Seahub.</li>
+</ol>
+<p>        2.1. Email para la cuenta del administrador.</p>
+<p><a href="mailto:admin@ejemplo.com" target="_blank"><code>admin@ejemplo.com</code></a></p>
+<p>         2.2. Contraseña de la cuenta de administrador.</p>
+<p><code>Contraseña del administrador.</code></p>
+<p>        2.3. Ingrese la contraseña nuevamente.</p>
+<p><code>Contraseña del administrador.</code></p>
+<p>Paso 4: Crear servicio Systemd Service.</p>
+<ol type="1" start="1">
+<li>Crear un archivos de unidad systemd para el servidor de fondo de Seafile.</li>
+</ol>
+<p>sudo vim /etc/systemd/system/seafile.service</p>
+<p>Añade:</p>
+<p><code>[Unit]</code></p>
+<p><code>Description=Seafile</code></p>
+<p><code>After= mysql.service</code></p>
+<p><code>After=network.target</code></p>
+<p><code>[Service]</code></p>
+<p><code>Type=forking</code></p>
+<p><code>ExecStart=/srv/seafile-server-latest/seafile.sh start</code></p>
+<p><code>ExecStop=/srv/seafile-server-latest/seafile.sh stop</code></p>
+<p><code>[Install]</code></p>
+<p><code>WantedBy=multi-user.target</code></p>
+<ol type="1" start="2">
+<li><code>También crea uno para Seahub.</code></li>
+</ol>
+<p><code>cat /etc/systemd/system/seahub.service</code></p>
+<p><code>[Unit]</code></p>
+<p><code>Description=Seafile</code></p>
+<p><code>After= mysql.service</code></p>
+<p><code>After=network.target</code></p>
+<p><code>[Service]</code></p>
+<p><code>Type=forking</code></p>
+<p><code>ExecStart=/srv/seafile-server-latest/seahub.sh start</code></p>
+<p><code>ExecStop=/srv/seafile-server-latest/seahub.sh stop</code></p>
+<p><code>[Install]</code></p>
+<p><code>WantedBy=multi-user.target</code></p>
+<ol type="1" start="3">
+<li>Inicie y habilite los servicios para iniciar en el arranque:</li>
+</ol>
+<p>sudo systemctl daemon-reload</p>
+<p>sudo systemctl start seafile &amp;&amp; sudo systemctl enable seafile</p>
+<p>sudo systemctl start seahub &amp;&amp; sudo systemctl enable seahub</p>
+<ol type="1" start="4">
+<li>Confirmar estado de servicios.</li>
+</ol>
+<p>systemctl status  seafile</p>
+<p>systemctl status  seahub</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Paso 6: Configurar Nginx Reverse Proxy." duration="0">
+        <ol type="1" start="1">
+<li>Ahora que están los servicios en ejecución, es hora de configurar nginx como un proxy inverso para el servidor seafile.</li>
+</ol>
+<p>sudo apt -y install nginx</p>
+<ol type="1" start="2">
+<li>Crea un nuevo archivo de configuración en /etc/nginx/conf.d/seafile.conf con los siguientes contenidos.</li>
+</ol>
+<p><code>server {</code></p>
+<p><code>    listen 80;</code></p>
+<p><code>    listen [::]:80;</code></p>
+<p><code>    server_name  fileserver.example.com;</code></p>
+<p><code>    autoindex off;</code></p>
+<p><code>    client_max_body_size 100M;</code></p>
+<p><code>    access_log /var/log/nginx/seafile.com.access.log;</code></p>
+<p><code>    error_log /var/log/nginx/seafile.com.error.log;</code></p>
+<p><code>     location / {</code></p>
+<p><code>            proxy_pass         http://127.0.0.1:8000;</code></p>
+<p><code>            proxy_set_header   Host $host;</code></p>
+<p><code>            proxy_set_header   X-Real-IP $remote_addr;</code></p>
+<p><code>            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;</code></p>
+<p><code>            proxy_set_header   X-Forwarded-Host $server_name;</code></p>
+<p><code>            proxy_read_timeout  1200s;</code></p>
+<p><code>        }</code></p>
+<p><code>     location /seafhttp {</code></p>
+<p><code>            rewrite ^/seafhttp(.*)$ $1 break;</code></p>
+<p><code>            proxy_pass http://127.0.0.1:8082;</code></p>
+<p><code>            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;</code></p>
+<p><code>            proxy_connect_timeout  36000s;</code></p>
+<p><code>            proxy_read_timeout  36000s;</code></p>
+<p><code>            proxy_send_timeout  36000s;</code></p>
+<p><code>            send_timeout  36000s;</code></p>
+<p><code>        }</code></p>
+<p><code>    location /media {</code></p>
+<p><code>            root /srv/seafile-server-latest/seahub;</code></p>
+<p><code>        }</code></p>
+<p>Finalmente, visita el nombre de dominio de tu servidor Seafile en <a href="http://ejemplo.com" target="_blank">http://ejemplo.com</a>, inicia sesión y ya lo tienes.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+
+</body>
+</html>
