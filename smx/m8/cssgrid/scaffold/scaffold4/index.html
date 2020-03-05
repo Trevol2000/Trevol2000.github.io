@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<style>
+    html {height: 100%;}
+    body {
+        height: 100%;
+        margin: 0;
+    }
+    .wrapper {
+        display: grid;
+        grid-template-areas: 
+        "r r"
+        "a a"
+        "v am"
+        "l l"
+        "a1 n"
+        "m m"
+        ;
+        grid-template-rows: 2.5em 5em 1fr 5em 1fr 5em;
+        height: 100%;
+
+    }
+    .section1 {
+        background-color: #F44336;
+        grid-area: r;
+    }
+    .section2 {
+        background-color: #2196F3;
+        grid-area: a;
+    }
+    .section3 {
+        background-color: #4CAF50;
+        grid-area: v;
+        width: 70%;
+        justify-self: flex-end;
+    }
+    .section4 {
+        background-color: #FFEB3B;
+        grid-area: am;
+        width: 70%;
+        justify-self: flex-start;
+    }
+    .section5 {
+        background-color: #9C27B0;
+        grid-area: l;
+    }
+    .section6 {
+        background-color: #009688;
+        grid-area: a1;
+        width: 70%;
+        justify-self: flex-end;
+    }
+    .section7 {
+        background-color: #FF9800;
+        grid-area: n;
+        width: 70%;
+        justify-self: flex-start;
+        align-self: flex-start;
+        padding-bottom: 5em;
+    }
+    .section8 {
+        background-color: #795548;
+        grid-area: m;
+    }
+</style>
+
+<div class="wrapper">
+    <div class="section1">Lorem ipsum dolor sit amet</div>
+    <div class="section2">Lorem ipsum dolor sit amet</div>
+    <div class="section3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor. Mauris in aliquam sem fringilla ut morbi. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Vitae sapien pellentesque habitant morbi tristique senectus et. Cursus euismod quis viverra nibh cras pulvinar. Quisque egestas diam in arcu cursus euismod quis. Lectus mauris ultrices eros in.</div>
+    <div class="section4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor. Mauris in aliquam sem fringilla ut morbi. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Vitae sapien pellentesque habitant morbi tristique senectus et.</div>
+    <div class="section5">Lorem ipsum dolor sit amet</div>
+    <div class="section6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor. Mauris in aliquam sem fringilla ut morbi. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Vitae sapien pellentesque habitant morbi tristique senectus et. Cursus euismod quis viverra nibh cras pulvinar. Quisque egestas diam in arcu cursus euismod quis. Lectus mauris ultrices eros in.</div>
+    <div class="section7">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor. Mauris in aliquam sem fringilla ut morbi. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Vitae sapien pellentesque habitant morbi tristique senectus et.</div>
+    <div class="section8">Lorem ipsum dolor sit amet</div>
+</div>
